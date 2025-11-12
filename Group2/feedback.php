@@ -15,43 +15,93 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: #f5f5f5;
             min-height: 100vh;
+            display: flex;
         }
         
-        /* Header */
-        .header {
+        /* Sidebar Styles */
+        .sidebar {
+            width: 200px;
+            background: linear-gradient(180deg, #C17A3F 0%, #B8693A 100%);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            position: fixed;
+            height: 100vh;
+            left: 0;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .sidebar-header {
+            background: #C17A3F;
+            padding: 20px 15px;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            line-height: 1.4;
+        }
+        
+        .nav-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .nav-item {
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+        
+        .nav-item a {
+            display: flex;
+            align-items: center;
+            padding: 18px 20px;
+            color: #2d2d2d;
+            text-decoration: none;
+            font-size: 15px;
+            transition: all 0.3s;
+            background: rgba(255,255,255,0.2);
+        }
+        
+        .nav-item a:hover {
+            background: rgba(255,255,255,0.3);
+            padding-left: 25px;
+        }
+        
+        .nav-item.active a {
+            background: rgba(0,0,0,0.2);
+            color: #fff;
+            font-weight: 600;
+        }
+        
+        .nav-icon {
+            margin-right: 12px;
+            font-size: 20px;
+        }
+        
+        /* Main Content */
+        .main-content {
+            margin-left: 200px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .top-bar {
             background: linear-gradient(90deg, #C17A3F 0%, #D4874B 100%);
             padding: 15px 30px;
+            color: #fff;
             display: flex;
             justify-content: space-between;
             align-items: center;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
         
-        .home-btn {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: #fff;
-            text-decoration: none;
-            font-size: 18px;
-            font-weight: 500;
-            padding: 8px 15px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 5px;
-            transition: background 0.3s;
-        }
-        
-        .home-btn:hover {
-            background: rgba(255,255,255,0.2);
-        }
-        
-        .home-icon {
-            font-size: 24px;
-        }
-        
         .page-header-title {
             color: #fff;
-            font-size: 32px;
+            font-size: 24px;
             font-weight: 500;
             display: flex;
             align-items: center;
@@ -59,14 +109,34 @@
         }
         
         .feedback-icon {
-            font-size: 40px;
+            font-size: 32px;
+        }
+        
+        .logout-btn {
+            background: rgba(255,255,255,0.2);
+            color: #fff;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-size: 14px;
+        }
+        
+        .logout-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+        
+        .content-area {
+            padding: 30px;
+            flex: 1;
+            overflow-y: auto;
         }
         
         /* Main Content */
         .container {
             max-width: 1400px;
-            margin: 30px auto;
-            padding: 0 30px;
+            margin: 0 auto;
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 30px;
@@ -230,13 +300,6 @@
             font-size: 16px;
         }
         
-        .no-feedback {
-            text-align: center;
-            padding: 60px 20px;
-            color: #999;
-            font-style: italic;
-        }
-        
         /* Scrollbar */
         .feedback-list::-webkit-scrollbar {
             width: 6px;
@@ -252,126 +315,194 @@
             border-radius: 10px;
         }
         
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
         @media (max-width: 968px) {
             .container {
                 grid-template-columns: 1fr;
             }
             
             .page-header-title {
-                font-size: 24px;
+                font-size: 20px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 60px;
             }
             
-            .container {
-                padding: 0 15px;
+            .sidebar-header {
+                font-size: 10px;
+                padding: 15px 10px;
+            }
+            
+            .nav-item a {
+                padding: 15px 10px;
+                justify-content: center;
+            }
+            
+            .nav-item a span:not(.nav-icon) {
+                display: none;
+            }
+            
+            .main-content {
+                margin-left: 60px;
+            }
+            
+            .content-area {
+                padding: 15px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <div class="header">
-        <a href="home.php" class="home-btn">
-            <span class="home-icon">🏠</span>
-            <span>Home</span>
-        </a>
-        <h1 class="page-header-title">
-            Customer Feedback
-            <span class="feedback-icon">💬</span>
-        </h1>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            Panyeros kusina
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="home.php">
+                    <span class="nav-icon">🏠</span>
+                    <span>Home</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="inventory.php">
+                    <span class="nav-icon">📦</span>
+                    <span>Inventory</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="loyalty.php">
+                    <span class="nav-icon">💳</span>
+                    <span>Loyalty Cards</span>
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a href="feedback.php">
+                    <span class="nav-icon">💬</span>
+                    <span>Feedbacks</span>
+                </a>
+            </li>
+        </ul>
     </div>
     
     <!-- Main Content -->
-    <div class="container">
-        <!-- Submit Feedback Card -->
-        <div class="card">
-            <div class="card-header">Submit New Feedback</div>
-            <div class="card-body">
-                <div id="successAlert" class="alert alert-success">
-                    Feedback submitted successfully!
-                </div>
-                
-                <form id="feedbackForm">
-                    <div class="form-group">
-                        <label class="form-label">Customer Name</label>
-                        <input type="text" id="customerName" class="form-control" 
-                               placeholder="Enter your name" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Comment</label>
-                        <textarea id="comment" class="form-control" 
-                                  placeholder="Share your experience with us..." required></textarea>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Rate us</label>
-                        <div class="rating-container">
-                            <span class="star-display">⭐ ⭐ ⭐ ⭐ ⭐</span>
-                        </div>
-                        <select id="rating" class="rating-select" required>
-                            <option value="">Select Rating</option>
-                            <option value="5">5 Stars - Excellent</option>
-                            <option value="4">4 Stars - Very Good</option>
-                            <option value="3">3 Stars - Good</option>
-                            <option value="2">2 Stars - Fair</option>
-                            <option value="1">1 Star - Poor</option>
-                        </select>
-                    </div>
-                    
-                    <button type="submit" class="submit-btn">Submit</button>
-                </form>
-            </div>
+    <div class="main-content">
+        <div class="top-bar">
+            <h1 class="page-header-title">
+                Customer Feedback
+                <span class="feedback-icon">💬</span>
+            </h1>
+            <button class="logout-btn" onclick="alert('Logout functionality')">Logout</button>
         </div>
         
-        <!-- All Feedback Card -->
-        <div class="card">
-            <div class="card-header">All Feedback</div>
-            <div class="card-body">
-                <div id="feedbackList" class="feedback-list">
-                    <!-- Sample feedbacks -->
-                    <div class="feedback-item">
-                        <div class="feedback-header">
-                            <span class="customer-name">Anna Lee</span>
-                            <span class="feedback-date">Oct 12, 2025</span>
+        <div class="content-area">
+            <div class="container">
+                <!-- Submit Feedback Card -->
+                <div class="card">
+                    <div class="card-header">Submit New Feedback</div>
+                    <div class="card-body">
+                        <div id="successAlert" class="alert alert-success">
+                            Feedback submitted successfully!
                         </div>
-                        <div class="feedback-text">Great food and excellent service! Will definitely come back.</div>
-                        <div class="feedback-rating">⭐⭐⭐⭐⭐</div>
+                        
+                        <form id="feedbackForm">
+                            <div class="form-group">
+                                <label class="form-label">Customer Name</label>
+                                <input type="text" id="customerName" class="form-control" 
+                                       placeholder="Enter your name" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Comment</label>
+                                <textarea id="comment" class="form-control" 
+                                          placeholder="Share your experience with us..." required></textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Rate us</label>
+                                <div class="rating-container">
+                                    <span class="star-display">⭐ ⭐ ⭐ ⭐ ⭐</span>
+                                </div>
+                                <select id="rating" class="rating-select" required>
+                                    <option value="">Select Rating</option>
+                                    <option value="5">5 Stars - Excellent</option>
+                                    <option value="4">4 Stars - Very Good</option>
+                                    <option value="3">3 Stars - Good</option>
+                                    <option value="2">2 Stars - Fair</option>
+                                    <option value="1">1 Star - Poor</option>
+                                </select>
+                            </div>
+                            
+                            <button type="submit" class="submit-btn">Submit</button>
+                        </form>
                     </div>
-                    
-                    <div class="feedback-item">
-                        <div class="feedback-header">
-                            <span class="customer-name">Mark Johnson</span>
-                            <span class="feedback-date">Oct 11, 2025</span>
+                </div>
+                
+                <!-- All Feedback Card -->
+                <div class="card">
+                    <div class="card-header">All Feedback</div>
+                    <div class="card-body">
+                        <div id="feedbackList" class="feedback-list">
+                            <!-- Sample feedbacks -->
+                            <div class="feedback-item">
+                                <div class="feedback-header">
+                                    <span class="customer-name">Anna Lee</span>
+                                    <span class="feedback-date">Oct 12, 2025</span>
+                                </div>
+                                <div class="feedback-text">Great food and excellent service! Will definitely come back.</div>
+                                <div class="feedback-rating">⭐⭐⭐⭐⭐</div>
+                            </div>
+                            
+                            <div class="feedback-item">
+                                <div class="feedback-header">
+                                    <span class="customer-name">Mark Johnson</span>
+                                    <span class="feedback-date">Oct 11, 2025</span>
+                                </div>
+                                <div class="feedback-text">The noodles are amazing! Very authentic taste.</div>
+                                <div class="feedback-rating">⭐⭐⭐⭐</div>
+                            </div>
+                            
+                            <div class="feedback-item">
+                                <div class="feedback-header">
+                                    <span class="customer-name">Lisa Wong</span>
+                                    <span class="feedback-date">Oct 10, 2025</span>
+                                </div>
+                                <div class="feedback-text">Good food but waiting time is a bit long.</div>
+                                <div class="feedback-rating">⭐⭐⭐</div>
+                            </div>
+                            
+                            <div class="feedback-item">
+                                <div class="feedback-header">
+                                    <span class="customer-name">Robert Chen</span>
+                                    <span class="feedback-date">Oct 09, 2025</span>
+                                </div>
+                                <div class="feedback-text">Best Filipino food in town! Highly recommended.</div>
+                                <div class="feedback-rating">⭐⭐⭐⭐⭐</div>
+                            </div>
+                            
+                            <div class="feedback-item">
+                                <div class="feedback-header">
+                                    <span class="customer-name">Sarah Martinez</span>
+                                    <span class="feedback-date">Oct 08, 2025</span>
+                                </div>
+                                <div class="feedback-text">Delicious dishes and friendly staff. Will order again!</div>
+                                <div class="feedback-rating">⭐⭐⭐⭐⭐</div>
+                            </div>
                         </div>
-                        <div class="feedback-text">The noodles are amazing! Very authentic taste.</div>
-                        <div class="feedback-rating">⭐⭐⭐⭐</div>
-                    </div>
-                    
-                    <div class="feedback-item">
-                        <div class="feedback-header">
-                            <span class="customer-name">Lisa Wong</span>
-                            <span class="feedback-date">Oct 10, 2025</span>
-                        </div>
-                        <div class="feedback-text">Good food but waiting time is a bit long.</div>
-                        <div class="feedback-rating">⭐⭐⭐</div>
-                    </div>
-                    
-                    <div class="feedback-item">
-                        <div class="feedback-header">
-                            <span class="customer-name">Robert Chen</span>
-                            <span class="feedback-date">Oct 09, 2025</span>
-                        </div>
-                        <div class="feedback-text">Best Filipino food in town! Highly recommended.</div>
-                        <div class="feedback-rating">⭐⭐⭐⭐⭐</div>
-                    </div>
-                    
-                    <div class="feedback-item">
-                        <div class="feedback-header">
-                            <span class="customer-name">Sarah Martinez</span>
-                            <span class="feedback-date">Oct 08, 2025</span>
-                        </div>
-                        <div class="feedback-text">Delicious dishes and friendly staff. Will order again!</div>
-                        <div class="feedback-rating">⭐⭐⭐⭐⭐</div>
                     </div>
                 </div>
             </div>
@@ -432,18 +563,5 @@
             }, 3000);
         });
     </script>
-    
-    <style>
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-    </style>
 </body>
 </html>

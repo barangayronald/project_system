@@ -18,7 +18,6 @@
             min-height: 100vh;
         }
         
-        /* Sidebar Styles */
         .sidebar {
             width: 200px;
             background: linear-gradient(180deg, #C17A3F 0%, #B8693A 100%);
@@ -81,7 +80,6 @@
             font-size: 20px;
         }
         
-        /* Main Content */
         .main-content {
             margin-left: 200px;
             flex: 1;
@@ -112,13 +110,6 @@
             font-size: 32px;
         }
         
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 15px;
-        }
-        
         .logout-btn {
             background: rgba(255,255,255,0.2);
             color: #fff;
@@ -140,7 +131,6 @@
             overflow-y: auto;
         }
         
-        /* Stats Bar */
         .stats-bar {
             display: flex;
             gap: 20px;
@@ -171,7 +161,6 @@
             font-weight: 600;
         }
         
-        /* Main Container */
         .container {
             display: grid;
             grid-template-columns: 450px 1fr;
@@ -261,7 +250,6 @@
             background: #B8693A;
         }
         
-        /* Customer Table */
         .table-container {
             overflow-x: auto;
         }
@@ -465,26 +453,32 @@
     </style>
 </head>
 <body>
-    <!-- Sidebar -->
+    
     <div class="sidebar">
         <div class="sidebar-header">
             Panyeros kusina
         </div>
         <ul class="nav-menu">
             <li class="nav-item">
-                <a href="#" onclick="alert('Navigate to home page'); return false;">
+                <a href="home.php">
                     <span class="nav-icon">🏠</span>
                     <span>Home</span>
                 </a>
             </li>
+            <li class="nav-item">
+                <a href="inventory.php">
+                    <span class="nav-icon">📦</span>
+                    <span>Inventory</span>
+                </a>
+            </li>
             <li class="nav-item active">
-                <a href="#" onclick="return false;">
+                <a href="loyalty.php">
                     <span class="nav-icon">💳</span>
                     <span>Loyalty Cards</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#" onclick="alert('Navigate to feedback page'); return false;">
+                <a href="feedback.php">
                     <span class="nav-icon">💬</span>
                     <span>Feedbacks</span>
                 </a>
@@ -492,9 +486,7 @@
         </ul>
     </div>
     
-    <!-- Main Content -->
     <div class="main-content">
-        <!-- Top Bar -->
         <div class="top-bar">
             <h1 class="page-header-title">
                 Loyalty Program
@@ -503,9 +495,7 @@
             <button class="logout-btn" onclick="alert('Logout functionality')">Logout</button>
         </div>
         
-        <!-- Content Area -->
         <div class="content-area">
-            <!-- Stats Bar -->
             <div class="stats-bar">
                 <div class="stat-box">
                     <div class="stat-value" id="totalCustomers">0</div>
@@ -521,7 +511,6 @@
                 </div>
             </div>
             
-            <!-- Main Container -->
             <div class="container">
                 <div>
                     <div class="card">
@@ -607,62 +596,108 @@
     </div>
 
     <script>
-        const customers = {
-            'juan.dela.cruz@email.com': {
-                name: 'Juan Dela Cruz',
-                contact: 'juan.dela.cruz@email.com',
-                points: 350,
-                transactions: [
-                    { date: '2025-10-01', time: '09:30 AM', points: 50, note: 'Purchase: Mixed vegetables bundle' },
-                    { date: '2025-10-08', time: '02:15 PM', points: 100, note: 'Purchase: Premium meat pack' },
-                    { date: '2025-10-14', time: '11:45 AM', points: 200, note: 'Birthday bonus points' }
-                ]
-            },
-            'maria.santos@email.com': {
-                name: 'Maria Santos',
-                contact: 'maria.santos@email.com',
-                points: 280,
-                transactions: [
-                    { date: '2025-09-28', time: '10:00 AM', points: 80, note: 'Weekly grocery shopping' },
-                    { date: '2025-10-05', time: '03:30 PM', points: 120, note: 'Bulk purchase discount' },
-                    { date: '2025-10-12', time: '01:20 PM', points: 80, note: 'Regular purchase' }
-                ]
-            },
-            'pedro.garcia@email.com': {
-                name: 'Pedro Garcia',
-                contact: 'pedro.garcia@email.com',
-                points: 220,
-                transactions: [
-                    { date: '2025-09-30', time: '08:45 AM', points: 60, note: 'Fresh produce purchase' },
-                    { date: '2025-10-07', time: '04:10 PM', points: 90, note: 'Weekend shopping' },
-                    { date: '2025-10-13', time: '12:30 PM', points: 70, note: 'Special order' }
-                ]
-            },
-            'anna.lee@email.com': {
-                name: 'Anna Lee',
-                contact: 'anna.lee@email.com',
-                points: 195,
-                transactions: [
-                    { date: '2025-10-02', time: '11:15 AM', points: 45, note: 'Small purchase' },
-                    { date: '2025-10-09', time: '02:00 PM', points: 100, note: 'Large order' },
-                    { date: '2025-10-15', time: '10:30 AM', points: 50, note: 'Regular customer bonus' }
-                ]
-            },
-            '09171234567': {
-                name: 'Mark Johnson',
-                contact: '09171234567',
-                points: 180,
-                transactions: [
-                    { date: '2025-10-03', time: '09:00 AM', points: 60, note: 'First purchase' },
-                    { date: '2025-10-10', time: '03:45 PM', points: 70, note: 'Return customer' },
-                    { date: '2025-10-14', time: '01:00 PM', points: 50, note: 'Referral bonus' }
-                ]
+        // This would connect to your PHP backend
+        // For now, using the database structure to show consolidated customer info
+        
+        async function loadCustomers() {
+            try {
+                // In production, this would be: fetch('api/get_customers.php')
+                // For now, simulating the database query result that groups by email
+                // SQL: SELECT Name, Email, MAX(Points) as Points, MAX(Purchase_Date) as Purchase_Date, 
+                //      COUNT(*) as transaction_count FROM loyalty GROUP BY Email ORDER BY Points DESC
+                
+                const response = {
+                    customers: [
+                        {
+                            name: 'Juan Dela Cruz',
+                            email: 'juan.dela.cruz@email.com',
+                            points: 350,
+                            last_purchase: '2025-10-14 11:45:00',
+                            transaction_count: 3
+                        },
+                        {
+                            name: 'Maria Santos',
+                            email: 'maria.santos@email.com',
+                            points: 280,
+                            last_purchase: '2025-10-12 13:20:00',
+                            transaction_count: 3
+                        },
+                        {
+                            name: 'Pedro Garcia',
+                            email: 'pedro.garcia@email.com',
+                            points: 220,
+                            last_purchase: '2025-10-13 12:30:00',
+                            transaction_count: 3
+                        },
+                        {
+                            name: 'Anna Lee',
+                            email: 'anna.lee@email.com',
+                            points: 195,
+                            last_purchase: '2025-10-15 10:30:00',
+                            transaction_count: 3
+                        },
+                        {
+                            name: 'Mark Johnson',
+                            email: '09171234567',
+                            points: 180,
+                            last_purchase: '2025-10-14 13:00:00',
+                            transaction_count: 3
+                        }
+                    ]
+                };
+                
+                return response.customers;
+            } catch (error) {
+                console.error('Error loading customers:', error);
+                return [];
             }
-        };
+        }
 
-        function updateStats() {
-            const customerCount = Object.keys(customers).length;
-            const totalPoints = Object.values(customers).reduce((sum, c) => sum + c.points, 0);
+        async function loadCustomerHistory(email) {
+            try {
+                // In production: fetch(`api/get_history.php?email=${email}`)
+                // SQL: SELECT * FROM loyalty WHERE Email = ? ORDER BY Purchase_Date DESC
+                
+                const histories = {
+                    'juan.dela.cruz@email.com': [
+                        { purchase_date: '2025-10-14 11:45:00', points: 350, note: 'Birthday bonus points' },
+                        { purchase_date: '2025-10-08 14:15:00', points: 150, note: 'Premium meat pack' },
+                        { purchase_date: '2025-10-01 09:30:00', points: 50, note: 'Mixed vegetables bundle' }
+                    ],
+                    'maria.santos@email.com': [
+                        { purchase_date: '2025-10-12 13:20:00', points: 280, note: 'Regular purchase' },
+                        { purchase_date: '2025-10-05 15:30:00', points: 200, note: 'Bulk purchase discount' },
+                        { purchase_date: '2025-09-28 10:00:00', points: 80, note: 'Weekly grocery shopping' }
+                    ],
+                    'pedro.garcia@email.com': [
+                        { purchase_date: '2025-10-13 12:30:00', points: 220, note: 'Special order' },
+                        { purchase_date: '2025-10-07 16:10:00', points: 150, note: 'Weekend shopping' },
+                        { purchase_date: '2025-09-30 08:45:00', points: 60, note: 'Fresh produce purchase' }
+                    ],
+                    'anna.lee@email.com': [
+                        { purchase_date: '2025-10-15 10:30:00', points: 195, note: 'Regular customer bonus' },
+                        { purchase_date: '2025-10-09 14:00:00', points: 145, note: 'Large order' },
+                        { purchase_date: '2025-10-02 11:15:00', points: 45, note: 'Small purchase' }
+                    ],
+                    '09171234567': [
+                        { purchase_date: '2025-10-14 13:00:00', points: 180, note: 'Referral bonus' },
+                        { purchase_date: '2025-10-10 15:45:00', points: 130, note: 'Return customer' },
+                        { purchase_date: '2025-10-03 09:00:00', points: 60, note: 'First purchase' }
+                    ]
+                };
+                
+                return histories[email] || [];
+            } catch (error) {
+                console.error('Error loading history:', error);
+                return [];
+            }
+        }
+
+        let customers = [];
+
+        async function updateStats() {
+            const customerCount = customers.length;
+            const totalPoints = customers.reduce((sum, c) => sum + c.points, 0);
             const avgPoints = customerCount > 0 ? (totalPoints / customerCount).toFixed(1) : 0;
             
             document.getElementById('totalCustomers').textContent = customerCount;
@@ -671,50 +706,44 @@
         }
 
         function renderTopCustomers() {
-            const sortedCustomers = Object.values(customers)
+            const topCustomers = [...customers]
                 .sort((a, b) => b.points - a.points)
                 .slice(0, 5);
             
-            const html = sortedCustomers.map((customer, index) => `
+            const html = topCustomers.map((customer, index) => `
                 <div class="top-customer-item">
                     <span class="customer-name">${index + 1}. ${customer.name}</span>
                     <span class="customer-points">${customer.points} pts</span>
                 </div>
             `).join('');
             
-            document.getElementById('topCustomersList').innerHTML = html;
+            document.getElementById('topCustomersList').innerHTML = html || '<p style="text-align:center;color:#999;">No customers yet</p>';
         }
 
         function renderCustomerTable(filter = '') {
             const tbody = document.getElementById('customerTableBody');
-            const filteredCustomers = Object.values(customers)
-                .filter(c => 
-                    c.name.toLowerCase().includes(filter.toLowerCase()) ||
-                    c.contact.toLowerCase().includes(filter.toLowerCase())
-                );
+            const filteredCustomers = customers.filter(c => 
+                c.name.toLowerCase().includes(filter.toLowerCase()) ||
+                c.email.toLowerCase().includes(filter.toLowerCase())
+            );
             
             if (filteredCustomers.length === 0) {
                 tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:30px;color:#999;">No customers found</td></tr>';
                 return;
             }
             
-            const html = filteredCustomers.map(customer => {
-                const lastTransaction = customer.transactions[customer.transactions.length - 1];
-                const lastPurchase = `${lastTransaction.date} ${lastTransaction.time}`;
-                
-                return `
-                    <tr>
-                        <td>${customer.name}</td>
-                        <td>${customer.contact}</td>
-                        <td><span class="points-badge">${customer.points} pts</span></td>
-                        <td style="font-size:12px; color:#666;">${lastPurchase}</td>
-                        <td><span class="transaction-count">${customer.transactions.length} transactions</span></td>
-                        <td>
-                            <button class="history-btn" onclick="viewHistory('${customer.contact}')">View History</button>
-                        </td>
-                    </tr>
-                `;
-            }).join('');
+            const html = filteredCustomers.map(customer => `
+                <tr>
+                    <td>${customer.name}</td>
+                    <td>${customer.email}</td>
+                    <td><span class="points-badge">${customer.points} pts</span></td>
+                    <td style="font-size:12px; color:#666;">${customer.last_purchase}</td>
+                    <td><span class="transaction-count">${customer.transaction_count} transactions</span></td>
+                    <td>
+                        <button class="history-btn" onclick="viewHistory('${customer.email}')">View History</button>
+                    </td>
+                </tr>
+            `).join('');
             
             tbody.innerHTML = html;
         }
@@ -732,81 +761,82 @@
             }, 5000);
         }
 
-        function viewHistory(contact) {
-            const customer = customers[contact];
-            if (!customer) return;
+        async function viewHistory(email) {
+            const history = await loadCustomerHistory(email);
+            const customer = customers.find(c => c.email === email);
             
-            const history = customer.transactions.map(t => 
-                `${t.date} ${t.time}: ${t.points > 0 ? '+' : ''}${t.points} pts - ${t.note}`
+            if (!customer || history.length === 0) {
+                alert('No transaction history found');
+                return;
+            }
+            
+            const historyText = history.map(t => 
+                `${t.purchase_date}: ${t.points} pts - ${t.note || 'No note'}`
             ).join('\n');
             
-            alert(`Transaction History for ${customer.name}\n\n${history}`);
+            alert(`Transaction History for ${customer.name}\n\n${historyText}`);
         }
         
         function updateTimestamp() {
             const now = new Date();
-            const date = now.toLocaleDateString('en-US', { 
+            const formatted = now.toLocaleString('en-US', { 
                 year: 'numeric', 
                 month: '2-digit', 
-                day: '2-digit' 
-            });
-            const time = now.toLocaleTimeString('en-US', { 
+                day: '2-digit',
                 hour: '2-digit', 
                 minute: '2-digit',
-                hour12: true 
+                second: '2-digit',
+                hour12: false
             });
-            document.getElementById('timestamp').value = `${date} ${time}`;
+            document.getElementById('timestamp').value = formatted;
         }
         
-        // Update timestamp every second
         setInterval(updateTimestamp, 1000);
         updateTimestamp();
 
-        document.getElementById('loyaltyForm').addEventListener('submit', function(e) {
+        document.getElementById('loyaltyForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
             const name = document.getElementById('customerName').value.trim();
-            const contact = document.getElementById('contact').value.trim();
+            const email = document.getElementById('contact').value.trim();
             const points = parseInt(document.getElementById('points').value);
             const note = document.getElementById('note').value.trim() || 'No note provided';
+            const timestamp = document.getElementById('timestamp').value;
             
-            // Get current timestamp
-            const now = new Date();
-            const date = now.toISOString().split('T')[0];
-            const time = now.toLocaleTimeString('en-US', { 
-                hour: '2-digit', 
-                minute: '2-digit',
-                hour12: true 
-            });
+            // In production, this would send to: fetch('api/add_transaction.php', {...})
+            // SQL: INSERT INTO loyalty (Name, Email, Points, Purchase_Date) VALUES (?, ?, ?, ?)
             
-            if (!customers[contact]) {
-                customers[contact] = {
+            const existingCustomer = customers.find(c => c.email === email);
+            
+            if (existingCustomer) {
+                const newPoints = existingCustomer.points + points;
+                if (newPoints < 0) {
+                    showAlert('⚠️ Insufficient points for redemption!', 'error');
+                    return;
+                }
+                
+                existingCustomer.points = newPoints;
+                existingCustomer.last_purchase = timestamp;
+                existingCustomer.transaction_count++;
+            } else {
+                if (points < 0) {
+                    showAlert('⚠️ Cannot create new customer with negative points!', 'error');
+                    return;
+                }
+                
+                customers.push({
                     name: name,
-                    contact: contact,
-                    points: 0,
-                    transactions: []
-                };
+                    email: email,
+                    points: points,
+                    last_purchase: timestamp,
+                    transaction_count: 1
+                });
             }
-            
-            const customer = customers[contact];
-            
-            if (customer.points + points < 0) {
-                showAlert('⚠️ Insufficient points for redemption!', 'error');
-                return;
-            }
-            
-            customer.points += points;
-            customer.transactions.push({
-                date: date,
-                time: time,
-                points: points,
-                note: note
-            });
             
             const action = points > 0 ? 'added' : 'redeemed';
-            showAlert(`✅ Successfully ${action} ${Math.abs(points)} points for ${name}! (${date} ${time})`, 'success');
+            showAlert(`✅ Successfully ${action} ${Math.abs(points)} points for ${name}!`, 'success');
             
-            updateStats();
+            await updateStats();
             renderTopCustomers();
             renderCustomerTable(document.getElementById('searchInput').value);
             
@@ -818,9 +848,13 @@
             renderCustomerTable(e.target.value);
         });
 
-        updateStats();
-        renderTopCustomers();
-        renderCustomerTable();
+        // Initialize
+        (async function() {
+            customers = await loadCustomers();
+            await updateStats();
+            renderTopCustomers();
+            renderCustomerTable();
+        })();
     </script>
 </body>
 </html>

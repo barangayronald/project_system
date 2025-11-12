@@ -201,7 +201,6 @@
             margin-top: 8px;
         }
         
-        /* Alert Card Styles */
         .alert-card {
             background: #ffc107;
             border-left: 5px solid #ff9800;
@@ -237,7 +236,6 @@
             border-bottom: 2px solid rgba(0,0,0,0.1);
         }
         
-        /* Low Stock Items */
         .stock-list {
             max-height: 300px;
             overflow-y: auto;
@@ -267,7 +265,6 @@
             font-weight: 600;
         }
         
-        /* Top Customers */
         .customer-list {
             display: flex;
             flex-direction: column;
@@ -297,7 +294,6 @@
             font-size: 14px;
         }
         
-        /* Recent Feedback */
         .feedback-list {
             display: flex;
             flex-direction: column;
@@ -372,7 +368,6 @@
             color: #2d2d2d;
         }
         
-        /* Scrollbar Styles */
         .stock-list::-webkit-scrollbar,
         .feedback-list::-webkit-scrollbar {
             width: 6px;
@@ -390,7 +385,6 @@
             border-radius: 10px;
         }
         
-        /* Responsive */
         @media (max-width: 1200px) {
             .bottom-section {
                 grid-template-columns: 1fr;
@@ -444,6 +438,12 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a href="inventory.php">
+                    <span class="nav-icon">📦</span>
+                    <span>Inventory</span>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a href="loyalty.php">
                     <span class="nav-icon">💳</span>
                     <span>Loyalty Cards</span>
@@ -460,7 +460,6 @@
     
     <!-- Main Content -->
     <div class="main-content">
-        <!-- Top Bar -->
         <div class="top-bar">
             <div class="user-info">
                 <span>👋 Welcome, <strong>Admin User</strong></span>
@@ -468,13 +467,10 @@
             <button class="logout-btn" onclick="alert('Logout functionality')">Logout</button>
         </div>
         
-        <!-- Content Area -->
         <div class="content-area">
             <h1 class="page-title">Dashboard</h1>
             
-            <!-- Stats Grid -->
             <div class="stats-grid">
-                <!-- Total Inventory -->
                 <div class="stat-card">
                     <div class="stat-header">
                         <div class="stat-title">Total Inventory Items</div>
@@ -484,7 +480,6 @@
                     <div class="stat-label">Active items in stock</div>
                 </div>
                 
-                <!-- Low Stock Alert -->
                 <div class="stat-card alert-card">
                     <div class="stat-header">
                         <div class="stat-title">Low Stock Alert</div>
@@ -494,7 +489,6 @@
                     <div class="stat-label">Items need restocking</div>
                 </div>
                 
-                <!-- Total Loyalty Points -->
                 <div class="stat-card">
                     <div class="stat-header">
                         <div class="stat-title">Total Loyalty Points Issued</div>
@@ -511,9 +505,7 @@
                 </div>
             </div>
             
-            <!-- Bottom Section -->
             <div class="bottom-section">
-                <!-- Low Stock Items -->
                 <div class="section-card">
                     <div class="section-title">🔴 Low Stock Items</div>
                     <div class="stock-list">
@@ -540,7 +532,6 @@
                     </div>
                 </div>
                 
-                <!-- Top Customers -->
                 <div class="section-card">
                     <div class="section-title">🏆 Top Loyalty Customers</div>
                     <div class="customer-list">
@@ -568,7 +559,6 @@
                 </div>
             </div>
             
-            <!-- Recent Feedback Section -->
             <div class="section-card" style="margin-top: 20px;">
                 <div class="section-title">💬 Recent Feedback</div>
                 <div class="feedback-list">
@@ -597,24 +587,6 @@
                         </div>
                         <div class="feedback-text">Good food but waiting time is a bit long.</div>
                         <div class="rating">⭐⭐⭐</div>
-                    </div>
-                    
-                    <div class="feedback-item">
-                        <div class="feedback-header">
-                            <span class="customer-name-fb">Robert Chen</span>
-                            <span class="feedback-date">Oct 09, 2025</span>
-                        </div>
-                        <div class="feedback-text">Best Filipino food in town! Highly recommended.</div>
-                        <div class="rating">⭐⭐⭐⭐⭐</div>
-                    </div>
-                    
-                    <div class="feedback-item">
-                        <div class="feedback-header">
-                            <span class="customer-name-fb">Sarah Martinez</span>
-                            <span class="feedback-date">Oct 08, 2025</span>
-                        </div>
-                        <div class="feedback-text">Delicious dishes and friendly staff. Will order again!</div>
-                        <div class="rating">⭐⭐⭐⭐⭐</div>
                     </div>
                 </div>
             </div>
